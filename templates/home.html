@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>Portal de Triagem Neurodivergente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .menu-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .card-menu {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        .card-menu:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+        .card-menu h2 { color: var(--accent-color); margin-bottom: 10px; }
+        .card-menu p { font-size: 0.9em; color: var(--text-muted); }
+        
+        @media (max-width: 600px) {
+            .menu-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Bem-vindo ao Portal de Triagem</h1>
+            <p>Selecione o questionário de rastreio que deseja realizar abaixo.</p>
+        </header>
+
+        <section class="info-box">
+            <p><strong>Importante:</strong> Estes testes são ferramentas de autorrelato para auxiliar na compreensão de traços neurodivergentes. Eles <strong>não</strong> substituem uma avaliação clínica com psicólogo ou psiquiatra.</p>
+        </section>
+
+        <div class="menu-container">
+            <a href="/raads" class="card-menu">
+                <h2>RAADS-R</h2>
+                <p>Rastreio para <strong>Autismo (TEA)</strong> em adultos.</p>
+                <p><small>80 questões • aprox. 20 min</small></p>
+            </a>
+
+            <a href="/asrs" class="card-menu">
+                <h2>ASRS-1.1</h2>
+                <p>Rastreio para <strong>TDAH</strong> em adultos.</p>
+                <p><small>18 questões • aprox. 5 min</small></p>
+            </a>
+        </div>
+
+        <footer style="margin-top: 40px; text-align: center; font-size: 0.8em; color: var(--text-muted);">
+            <p>© 2026 - Avaliações Neuropsicológicas</p>
+        </footer>
+    </div>
+</body>
+</html>
