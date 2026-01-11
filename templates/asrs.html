@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>ASRS-1.1 - Rastreio de TDAH</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <a href="/" style="text-decoration: none; color: var(--accent-color); font-size: 0.9em;">← Voltar ao Menu</a>
+            <h1>ASRS-1.1</h1>
+            <p class="subtitle">Escala de Autoavaliação de TDAH em Adultos</p>
+        </header>
+
+        <section class="info-box">
+            <p><strong>Instruções:</strong> Responda às perguntas abaixo avaliando como você se sentiu e se comportou nos <strong>últimos 6 meses</strong>.</p>
+        </section>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <form action="/asrs" method="POST" id="asrsForm">
+            
+            <div class="user-data">
+                <h3>Identificação</h3>
+                <div class="input-group">
+                    <label for="nome">Nome Completo:</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+            </div>
+
+            <hr>
+
+            {% for id, pergunta in questions %}
+            <div class="question-card">
+                <p class="question-text">
+                    <span class="q-number">{{ id }}.</span> {{ pergunta }}
+                </p>
+                
+                <div class="options">
+                    <label class="option-label">
+                        <input type="radio" name="q{{ id }}" value="Nunca" required>
+                        <span>Nunca</span>
+                    </label>
+                    
+                    <label class="option-label">
+                        <input type="radio" name="q{{ id }}" value="Raramente" required>
+                        <span>Raramente</span>
+                    </label>
+                    
+                    <label class="option-label">
+                        <input type="radio" name="q{{ id }}" value="As_vezes" required>
+                        <span>As_vezes</span>
+                    </label>
+                    
+                    <label class="option-label">
+                        <input type="radio" name="q{{ id }}" value="Frequentemente" required>
+                        <span>Frequentemente</span>
+                    </label>
+
+                    <label class="option-label">
+                        <input type="radio" name="q{{ id }}" value="Muito_Frequentemente" required>
+                        <span>Muito_Frequentemente</span>
+                    </label>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="form-footer">
+                <button type="submit" class="btn-submit">Ver Resultado de TDAH</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('asrsForm');
+        const progressBar = document.getElementById('progressBar');
+        const totalQuestions = 18;
+
+        form.addEventListener('change', () => {
+            const answered = form.querySelectorAll('input[type="radio"]:checked').length;
+            const percentage = (answered / totalQuestions) * 100;
+            progressBar.style.width = percentage + '%';
+        });
+    </script>
+</body>
+</html>
