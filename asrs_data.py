@@ -7,6 +7,7 @@ asrs_questions = [
     (4, "Quando você tem uma tarefa que exige muita concentração, com que frequência você evita ou adia o início dessa tarefa?"),
     (5, "Com que frequência você fica se mexendo na cadeira ou balançando as mãos ou os pés quando precisa ficar sentado por muito tempo?"),
     (6, "Com que frequência você se sente 'elétrico(a)' ou como se estivesse movido por um motor?"),
+    # ... (Estas 6 acima são a Parte A - a mais crítica)
     (7, "Com que frequência você comete erros por falta de atenção quando tem que trabalhar num projeto chato ou difícil?"),
     (8, "Com que frequência você tem dificuldade em manter a atenção quando está fazendo um trabalho chato ou repetitivo?"),
     (9, "Com que frequência você tem dificuldade em se concentrar no que as pessoas dizem, mesmo quando elas estão falando diretamente com você?"),
@@ -22,17 +23,20 @@ asrs_questions = [
 ]
 
 def calculate_asrs_score(responses):
+    # No ASRS, pontos acima de "As_vezes" ou "Frequentemente" em certas questões indicam TDAH
+    # Simplificaremos para uma pontuação de 0 a 4 por questão
     points_map = {
         "Nunca": 0,
         "Raramente": 1,
-        "Às vezes": 2,
+        "As_vezes": 2,
         "Frequentemente": 3,
-        "Muito Frequentemente": 4
+        "Muito_Frequentemente": 4
     }
+    
     total = 0
     for i in range(1, 19):
         ans = responses.get(f"q{i}")
         if ans:
-            # O .strip() e o .get() garantem que o servidor não trave se houver erro de acento
-            total += points_map.get(ans.strip(), 0)
+            total += points_map[ans]
+            
     return total
