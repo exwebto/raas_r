@@ -1,29 +1,42 @@
-<form action="/asrs" method="POST" id="asrsForm">
-            
-           {% for id, text in questions %}
-<div class="question-card">
-    <p class="question-text"><strong>{{ id }}.</strong> {{ text }}</p>
-    <div class="options">
-        <label class="option-label">
-            <input type="radio" name="q{{ id }}" value="0" required>
-            <span>Nunca</span>
-        </label>
-        <label class="option-label">
-            <input type="radio" name="q{{ id }}" value="1" required>
-            <span>Raramente</span>
-        </label>
-        <label class="option-label">
-            <input type="radio" name="q{{ id }}" value="2" required>
-            <span>Às vezes</span>
-        </label>
-        <label class="option-label">
-            <input type="radio" name="q{{ id }}" value="3" required>
-            <span>Frequentemente</span>
-        </label>
-        <label class="option-label">
-            <input type="radio" name="q{{ id }}" value="4" required>
-            <span>Muito Frequentemente</span>
-        </label>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASRS-1.1 - {{ clinica.nome }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header style="text-align: center; border-bottom: 2px solid var(--accent-color); padding-bottom: 20px; margin-bottom: 30px;">
+            <a href="/" style="float: left; text-decoration: none; color: var(--accent-color);">← Voltar</a>
+            <h1 style="margin: 10px 0;">{{ clinica.nome }}</h1>
+            <p><strong>{{ clinica.profissional }}</strong> | CRP: {{ clinica.crp }}</p>
+            <p style="font-size: 0.8em; color: var(--text-muted);">{{ clinica.endereco }}</p>
+        </header>
+
+        <form action="/asrs" method="POST" id="asrsForm">
+            <div class="user-data">
+                <h3>Dados do Paciente</h3>
+                <input type="text" name="nome" placeholder="Nome Completo" required>
+                <input type="email" name="email" placeholder="E-mail" required>
+            </div>
+
+            {% for id, text in questions %}
+            <div class="question-card" style="background: var(--bg-card); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid var(--border-color);">
+                <p><strong>{{ id }}. {{ text }}</strong></p>
+                <div class="options" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                    {% for label in ["Nunca", "Raramente", "Às vezes", "Frequentemente", "Muito Frequentemente"] %}
+                    <label style="cursor: pointer; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 5px;">
+                        <input type="radio" name="q{{ id }}" value="{{ label }}" required> {{ label }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-submit" style="width: 100%; padding: 15px; background: var(--accent-color); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Finalizar e Enviar via WhatsApp</button>
+        </form>
     </div>
-</div>
-{% endfor %}
+</body>
+</html>
