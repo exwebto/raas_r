@@ -36,32 +36,50 @@
                     <label for="email">E-mail:</label>
                     <input type="email" id="email" name="email" required>
                 </div>
-            <div class="options">
-    <label class="option-label">
-        <input type="radio" name="q{{ id }}" value="0" required>
-        <span>Nunca</span>
-    </label>
-    
-    <label class="option-label">
-        <input type="radio" name="q{{ id }}" value="1" required>
-        <span>Raramente</span>
-    </label>
-    
-    <label class="option-label">
-        <input type="radio" name="q{{ id }}" value="2" required>
-        <span>As_vezes</span>
-    </label>
-    
-    <label class="option-label">
-        <input type="radio" name="q{{ id }}" value="3" required>
-        <span>Frequentemente</span>
-    </label>
+            </div>
 
-    <label class="option-label">
-        <input type="radio" name="q{{ id }}" value="4" required>
-        <span>Muito_Frequentemente</span>
-    </label>
-</div>
+            <hr>
+
+            {% for id, pergunta in questions %}
+            <div class="question-card">
+                <p class="question-text">
+                    <span class="q-number">{{ id }}.</span> {{ pergunta }}
+                </p>
+                
+                <div class="options">
+                    <label class="option-label">
+                        <input type="radio" name="q{{ id }}" value="Nunca" required>
+                        <span>Nunca</span>
+                    </label>
+                    
+                    <label class="option-label">
+                        <input type="radio" name="q{{ id }}" value="Raramente" required>
+                        <span>Raramente</span>
+                    </label>
+                    
+                    <label class="option-label">
+                        <input type="radio" name="q{{ id }}" value="As_vezes" required>
+                        <span>As_vezes</span>
+                    </label>
+                    
+                    <label class="option-label">
+                        <input type="radio" name="q{{ id }}" value="Frequentemente" required>
+                        <span>Frequentemente</span>
+                    </label>
+
+                    <label class="option-label">
+                        <input type="radio" name="q{{ id }}" value="Muito_Frequentemente" required>
+                        <span>Muito_Frequentemente</span>
+                    </label>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="form-footer">
+                <button type="submit" class="btn-submit">Ver Resultado de TDAH</button>
+            </div>
+        </form>
+    </div>
 
     <script>
         const form = document.getElementById('asrsForm');
