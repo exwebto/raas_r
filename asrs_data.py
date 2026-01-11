@@ -23,6 +23,7 @@ asrs_questions = [
 ]
 
 def calculate_asrs_score(responses):
+    # Usamos chaves simplificadas para evitar erros de acentuação/espaço
     points_map = {
         "Nunca": 0,
         "Raramente": 1,
@@ -33,9 +34,16 @@ def calculate_asrs_score(responses):
     
     total = 0
     for i in range(1, 19):
+        # Pegamos a resposta e removemos espaços em branco extras no início ou fim
         ans = responses.get(f"q{i}")
-        if ans in points_map:
-            total += points_map[ans]
-            
+        if ans:
+            ans = ans.strip() # Limpa espaços invisíveis
+            # Verificamos se a resposta existe no nosso mapa antes de somar
+            if ans in points_map:
+                total += points_map[ans]
+            else:
+                # Se houver erro de digitação, assume 0 em vez de travar o site
+                print(f"Aviso: Chave não encontrada: '{ans}'")
+                total += 0
+                
     return total
-
