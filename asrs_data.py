@@ -23,19 +23,21 @@ asrs_questions = [
 ]
 
 def calculate_asrs_score(responses):
-    # Agora o mapa usa strings de números, que são 100% seguras no deploy
     points_map = {
-        "0": 0,
-        "1": 1,
-        "2": 2,
-        "3": 3,
-        "4": 4
+        "Nunca": 0,
+        "Raramente": 1,
+        "Às vezes": 2,
+        "Frequentemente": 3,
+        "Muito Frequentemente": 4
     }
     
     total = 0
     for i in range(1, 19):
         ans = responses.get(f"q{i}")
-        # Somamos o valor se ele existir no mapa, caso contrário somamos 0
-        total += points_map.get(ans, 0)
+        if ans:
+            # O .strip() remove espaços invisíveis que o Windows/Linux podem criar
+            ans = ans.strip()
+            # O .get(ans, 0) tenta pegar o valor. Se não achar a chave exata, ele usa 0 e NÃO TRAVA.
+            total += points_map.get(ans, 0)
             
     return total
