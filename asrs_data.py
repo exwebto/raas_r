@@ -22,10 +22,17 @@ asrs_questions = [
 ]
 
 def calculate_asrs_score(responses):
-    # Mapa numérico: Seguro contra erros de acentuação no Render
+    points_map = {
+        "Nunca": 0,
+        "Raramente": 1,
+        "Às vezes": 2,
+        "Frequentemente": 3,
+        "Muito Frequentemente": 4
+    }
     total = 0
     for i in range(1, 19):
         ans = responses.get(f"q{i}")
-        if ans and ans.isdigit():
-            total += int(ans)
+        if ans:
+            # O .strip() e o .get() garantem que o servidor não trave se houver erro de acento
+            total += points_map.get(ans.strip(), 0)
     return total
