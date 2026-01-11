@@ -7,7 +7,6 @@ asrs_questions = [
     (4, "Quando você tem uma tarefa que exige muita concentração, com que frequência você evita ou adia o início dessa tarefa?"),
     (5, "Com que frequência você fica se mexendo na cadeira ou balançando as mãos ou os pés quando precisa ficar sentado por muito tempo?"),
     (6, "Com que frequência você se sente 'elétrico(a)' ou como se estivesse movido por um motor?"),
-    # ... (Estas 6 acima são a Parte A - a mais crítica)
     (7, "Com que frequência você comete erros por falta de atenção quando tem que trabalhar num projeto chato ou difícil?"),
     (8, "Com que frequência você tem dificuldade em manter a atenção quando está fazendo um trabalho chato ou repetitivo?"),
     (9, "Com que frequência você tem dificuldade em se concentrar no que as pessoas dizem, mesmo quando elas estão falando diretamente com você?"),
@@ -23,19 +22,10 @@ asrs_questions = [
 ]
 
 def calculate_asrs_score(responses):
-    # Usar números elimina erro de acento, espaço e codificação
-    points_map = {
-        "0": 0,
-        "1": 1,
-        "2": 2,
-        "3": 3,
-        "4": 4
-    }
-    
+    # Mapa numérico: Seguro contra erros de acentuação no Render
     total = 0
     for i in range(1, 19):
         ans = responses.get(f"q{i}")
-        # Pega o valor numérico. Se não vier nada, usa 0.
-        total += points_map.get(ans, 0)
-            
+        if ans and ans.isdigit():
+            total += int(ans)
     return total
