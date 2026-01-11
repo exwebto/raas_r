@@ -115,6 +115,7 @@ Status: {conclusao}
 
 if __name__ == '__main__':
     init_db()
-    # Configuração para Render (dinâmico) ou Local (5000)
+    # Pega a porta do Render ou usa 5000 se for local
     port = int(os.environ.get("PORT", 5000))
+    # O host 0.0.0.0 é obrigatório para o Render conseguir acessar o app
     app.run(host='0.0.0.0', port=port)
