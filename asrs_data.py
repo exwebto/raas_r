@@ -23,8 +23,6 @@ asrs_questions = [
 ]
 
 def calculate_asrs_score(responses):
-    # No ASRS, pontos acima de "Às vezes" ou "Frequentemente" em certas questões indicam TDAH
-    # Simplificaremos para uma pontuação de 0 a 4 por questão
     points_map = {
         "Nunca": 0,
         "Raramente": 1,
@@ -36,7 +34,8 @@ def calculate_asrs_score(responses):
     total = 0
     for i in range(1, 19):
         ans = responses.get(f"q{i}")
-        if ans:
+        if ans in points_map:
             total += points_map[ans]
             
     return total
+
