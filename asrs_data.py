@@ -23,21 +23,19 @@ asrs_questions = [
 ]
 
 def calculate_asrs_score(responses):
+    # Usar números elimina erro de acento, espaço e codificação
     points_map = {
-        "Nunca": 0,
-        "Raramente": 1,
-        "Às vezes": 2,
-        "Frequentemente": 3,
-        "Muito Frequentemente": 4
+        "0": 0,
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4
     }
     
     total = 0
     for i in range(1, 19):
         ans = responses.get(f"q{i}")
-        if ans:
-            # O .strip() remove espaços invisíveis que o Windows/Linux podem criar
-            ans = ans.strip()
-            # O .get(ans, 0) tenta pegar o valor. Se não achar a chave exata, ele usa 0 e NÃO TRAVA.
-            total += points_map.get(ans, 0)
+        # Pega o valor numérico. Se não vier nada, usa 0.
+        total += points_map.get(ans, 0)
             
     return total
