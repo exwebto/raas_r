@@ -156,8 +156,15 @@ def calculate_asrs_score(responses):
     return total
 
 if __name__ == '__main__':
+    # FORÇAR ATUALIZAÇÃO DO BANCO (Pode apagar essas 2 linhas após funcionar uma vez)
+    if os.path.exists('database.db'):
+        os.remove('database.db')
+        
     init_db()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
     # Configuração para Render (dinâmico) ou Local (5000)
     port = int(os.environ.get("PORT", 5000))
 
     app.run(host='0.0.0.0', port=port)
+
