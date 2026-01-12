@@ -23,8 +23,7 @@ asrs_questions = [
 ]
 
 def calculate_asrs_score(responses):
-    # No ASRS, pontos acima de "As_vezes" ou "Frequentemente" em certas questões indicam TDAH
-    # Simplificaremos para uma pontuação de 0 a 4 por questão
+    # O dicionário com os seus novos termos com underscore
     points_map = {
         "Nunca": 0,
         "Raramente": 1,
@@ -34,9 +33,17 @@ def calculate_asrs_score(responses):
     }
     
     total = 0
+    # O formulário tem 18 perguntas (q1 até q18)
     for i in range(1, 19):
-        ans = responses.get(f"q{i}")
-        if ans:
-            total += points_map[ans]
+        campo = f"q{i}"
+        # .get() evita erro se a pergunta não foi respondida
+        valor_recebido = responses.get(campo)
+        
+        if valor_recebido:
+            # Limpa espaços invisíveis que o servidor possa ter inserido
+            valor_limpo = valor_recebido.strip()
+            # .get(valor_limpo, 0) tenta achar no dicionário. 
+            # Se não achar (erro de digitação), ele soma 0 e NÃO trava o site.
+            total += points_map.get(valor_limpo, 0)
             
     return total
