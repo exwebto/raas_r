@@ -17,7 +17,7 @@ MEU_WHATSAPP = "5533991726976"
 
 # Inicialização do Banco de Dados atualizado para suportar múltiplos testes
 def init_db():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     # Tabela unificada com coluna 'tipo_teste' para diferenciar
     cursor.execute('''
@@ -35,6 +35,7 @@ def init_db():
     conn.close()
 
 # --- ROTA: PÁGINA INICIAL (MENU) ---
+init_db()
 @app.route('/')
 def index():
     return render_template('home.html')
@@ -167,4 +168,5 @@ if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
 
     app.run(host='0.0.0.0', port=port)
+
 
